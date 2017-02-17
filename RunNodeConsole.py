@@ -1,6 +1,7 @@
 import sublime
 import sublime_plugin
 import subprocess
+import os
 
 
 class RunNodeConsoleCommand(sublime_plugin.TextCommand):
@@ -16,7 +17,7 @@ class RunNodeConsoleCommand(sublime_plugin.TextCommand):
 		if not os.path.isfile(filepath):
 			print('Please press F5 with a proper view')
 			return 
-		elif isalid == -1: #if .js extension not found
+		elif isvalid == -1: #if .js extension not found
 			print('Please press F5 with open .js file')
 			return
 		else:
