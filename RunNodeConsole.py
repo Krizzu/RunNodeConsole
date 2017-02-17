@@ -2,11 +2,27 @@ import sublime
 import sublime_plugin
 import subprocess
 import os
-
+import sys
 
 class RunNodeConsoleCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		self.getcurrentfile()
+		self.process = None
+		self.file = self.getcurrentfile()
+		self.os = self.getosname()
+
+		if self.file:
+			self.runnode(self.file)
+
+		
+
+	def getosname(self):
+		os = sys.platform.lower()
+		if os=='win32' or os=='cygwin':
+			return 'windows'
+		elif os=='linux':
+			return 'linux'
+		elif os=='darwin':
+			return 'osx'
 
 	"""Getting a file path to current open file. If it is not .js file, returns nothing"""
 	def getcurrentfile(self):
@@ -21,14 +37,11 @@ class RunNodeConsoleCommand(sublime_plugin.TextCommand):
 			print('Please press F5 with open .js file')
 			return
 		else:
-			dirname = os.path.dirname(filepath)
-			filename = os.path.basename(filepath)
-
+			file = os.path.join(os.path.dirname(filepath),os.path.basename(filepath))
 			#Run 
-			self.runnode(filename, dirname)
+			return file
 
-	def runnode(self, filename, directory):
+	def runnode(self, filename):
 
-		filename = os.path.join(directory,filename);
-
-		subprocess.Popen(['node', '-r',filename])
+		self.process = subprocess.Popen(['node', '-r',filename])
+		print('process pid:', self.process.pid)

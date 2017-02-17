@@ -7,6 +7,7 @@ Simple plugin for Sublime Text 3 to run nodejs scripts
 1. Add this to Package Manager
 2. Add binding to the script on install
 3. Instead of opening Nodejs everytime, find its Process ID, close it and re-run
+	- Implement a way for a different os to get pid of node to kill it
 4. Make it work on linux/os x - currently works only on Windows
 
 
